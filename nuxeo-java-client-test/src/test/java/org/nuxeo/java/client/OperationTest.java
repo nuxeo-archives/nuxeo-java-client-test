@@ -106,8 +106,8 @@ public class OperationTest extends BaseTest {
         try {
             nuxeoClient.automation()
                        .newRequest("Log")
-                       .param("message", "Error Log Test")
-                       .param("level", "error")
+                       .param("message", "Test Log")
+                       .param("level", "warn")
                        .execute();
         } catch (NuxeoClientException reason) {
             fail("Void operation failing");
