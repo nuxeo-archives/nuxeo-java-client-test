@@ -340,4 +340,12 @@ public class TestRepository extends TestBase {
         assertTrue(((List) document.getContextParameters().get("acls")).size() == 1);
         assertTrue(((Map) document.getContextParameters().get("breadcrumb")).size() == 2);
     }
+
+    @Test
+    public void itCanUseEnrichers() {
+        Document document = nuxeoClient.enrichers("acls", "breadcrumb").repository().fetchDocumentByPath("folder_2");
+        assertNotNull(document);
+        assertTrue(((List) document.getContextParameters().get("acls")).size() == 1);
+        assertTrue(((Map) document.getContextParameters().get("breadcrumb")).size() == 2);
+    }
 }
