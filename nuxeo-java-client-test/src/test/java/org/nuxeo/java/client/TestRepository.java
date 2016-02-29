@@ -30,6 +30,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nuxeo.ecm.automation.core.operations.business.BusinessCreateOperation;
+import org.nuxeo.ecm.automation.core.operations.business.BusinessFetchOperation;
+import org.nuxeo.ecm.automation.core.operations.business.BusinessUpdateOperation;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
@@ -44,10 +47,12 @@ import org.nuxeo.java.client.api.objects.audit.Audit;
 import org.nuxeo.java.client.api.objects.blob.Blob;
 import org.nuxeo.java.client.internals.spi.NuxeoClientException;
 import org.nuxeo.java.client.marshallers.DocumentMarshaller;
+import org.nuxeo.java.client.pojos.BusinessBean;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
 import org.nuxeo.runtime.test.runner.Jetty;
+import org.nuxeo.runtime.test.runner.LocalDeploy;
 
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,6 +66,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Features({ RestServerFeature.class, AuditFeature.class })
 @Jetty(port = 18090)
 @Deploy({ "org.nuxeo.ecm.core.io", "org.nuxeo.ecm.permissions" })
+@LocalDeploy("org.nuxeo.java.client.tests:OSGI-INF/adapter-contrib.xml")
 @RepositoryConfig(cleanup = Granularity.METHOD, init = RestServerInit.class)
 public class TestRepository extends TestBase {
 
@@ -342,10 +348,23 @@ public class TestRepository extends TestBase {
     }
 
     @Test
-    public void itCanUseEnrichers() {
-        Document document = nuxeoClient.enrichers("acls", "breadcrumb").repository().fetchDocumentByPath("folder_2");
-        assertNotNull(document);
-        assertTrue(((List) document.getContextParameters().get("acls")).size() == 1);
-        assertTrue(((Map) document.getContextParameters().get("breadcrumb")).size() == 2);
+    public void itCanUseBusinessBeans() {
+        // Test for pojo <-> adapter automation creation
+        BusinessBean note = new BusinessBean("Note", "File description", "Note Content", "Note", "object");
+        // Marshaller for bean 'note' registration
+        nuxeoClient.registerMarshaller(note);
+        note = (BusinessBean) nuxeoClient.automation("Business.BusinessCreateOperation")
+                                         .param("name", note.getTitle())
+                                         .input(note)
+                                         .param("parentPath", "/")
+                                         .execute();
+        assertNotNull(note);
+        // Test for pojo <-> adapter automation update
+        // Fetching the business adapter model
+        note = (BusinessBean) nuxeoClient.automation("Business.BusinessFetchOperation").input(note).execute();
+        assertNotNull(note.getId());
+        note.setTitle("Update");
+        note = (BusinessBean) nuxeoClient.automation("Business.BusinessUpdateOperation").input(note).execute();
+        assertEquals("Update", note.getTitle());
     }
 }
