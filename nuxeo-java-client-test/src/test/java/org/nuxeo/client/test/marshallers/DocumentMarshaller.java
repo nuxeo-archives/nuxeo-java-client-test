@@ -16,7 +16,7 @@
  * Contributors:
  *         Vladimir Pasquier <vpasquier@nuxeo.com>
  */
-package org.nuxeo.java.client.marshallers;
+package org.nuxeo.client.test.marshallers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.nuxeo.java.client.api.marshaller.NuxeoMarshaller;
-import org.nuxeo.java.client.api.objects.Document;
+import org.nuxeo.client.api.marshaller.NuxeoMarshaller;
+import org.nuxeo.client.api.objects.Document;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;

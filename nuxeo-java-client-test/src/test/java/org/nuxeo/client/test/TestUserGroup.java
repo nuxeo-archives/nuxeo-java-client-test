@@ -16,20 +16,19 @@
  * Contributors:
  *         Vladimir Pasquier <vpasquier@nuxeo.com>
  */
-package org.nuxeo.java.client;
+package org.nuxeo.client.test;
 
-import static org.junit.Assert.assertNotNull;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nuxeo.client.api.objects.user.Group;
+import org.nuxeo.client.api.objects.user.User;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
-import org.nuxeo.ecm.platform.routing.test.WorkflowFeature;
 import org.nuxeo.ecm.restapi.test.RestServerFeature;
-import org.nuxeo.ecm.restapi.test.RestServerInit;
-import org.nuxeo.java.client.api.objects.workflow.Workflows;
-import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
 import org.nuxeo.runtime.test.runner.Jetty;
@@ -38,11 +37,10 @@ import org.nuxeo.runtime.test.runner.Jetty;
  * @since 0.1
  */
 @RunWith(FeaturesRunner.class)
-@Features({ RestServerFeature.class, WorkflowFeature.class })
-@Deploy({ "org.nuxeo.ecm.platform.restapi.server.routing" })
+@Features({ RestServerFeature.class })
 @Jetty(port = 18090)
-@RepositoryConfig(cleanup = Granularity.METHOD, init = RestServerInit.class)
-public class TestWorkflow extends TestBase {
+@RepositoryConfig(cleanup = Granularity.METHOD)
+public class TestUserGroup extends TestBase {
 
     @Before
     public void authentication() {
@@ -50,14 +48,16 @@ public class TestWorkflow extends TestBase {
     }
 
     @Test
-    public void itCanFetchWorkflowInstances() {
-        Workflows workflows = nuxeoClient.fetchCurrentUser().fetchWorkflowInstances();
-        assertNotNull(workflows);
+    public void itCanGetUser() {
+        User user = nuxeoClient.getUserManager().fetchUser("Administrator");
+        assertNotNull(user);
+        assertEquals("Administrator", user.getProperties().getUsername());
     }
 
     @Test
-    public void itCanFetchDocWorflowInstances() {
-        Workflows workflows = nuxeoClient.repository().fetchDocumentRoot().fetchWorkflowInstances();
-        assertNotNull(workflows);
+    public void itCanGetGroup() {
+        Group group = nuxeoClient.getUserManager().fetchGroup("administrators");
+        assertNotNull(group);
+        assertEquals("administrators", group.getGroupName());
     }
 }

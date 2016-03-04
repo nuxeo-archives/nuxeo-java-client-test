@@ -16,13 +16,12 @@
  * Contributors:
  *         Vladimir Pasquier <vpasquier@nuxeo.com>
  */
-package org.nuxeo.java.client;
+package org.nuxeo.client.test;
 
 import javax.inject.Inject;
 
+import org.nuxeo.client.api.NuxeoClient;
 import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.java.client.api.ConstantsV1;
-import org.nuxeo.java.client.api.NuxeoClient;
 import org.nuxeo.runtime.transaction.TransactionHelper;
 
 /**

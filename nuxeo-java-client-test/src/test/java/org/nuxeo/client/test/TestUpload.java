@@ -16,7 +16,7 @@
  * Contributors:
  *         Vladimir Pasquier <vpasquier@nuxeo.com>
  */
-package org.nuxeo.java.client;
+package org.nuxeo.client.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -29,18 +29,18 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nuxeo.client.api.objects.Document;
+import org.nuxeo.client.internals.spi.NuxeoClientException;
+import org.nuxeo.client.api.ConstantsV1;
+import org.nuxeo.client.api.objects.Operation;
+import org.nuxeo.client.api.objects.blob.Blob;
+import org.nuxeo.client.api.objects.upload.BatchFile;
+import org.nuxeo.client.api.objects.upload.BatchUpload;
 import org.nuxeo.common.utils.FileUtils;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.ecm.restapi.test.RestServerFeature;
 import org.nuxeo.ecm.restapi.test.RestServerInit;
-import org.nuxeo.java.client.api.ConstantsV1;
-import org.nuxeo.java.client.api.objects.Document;
-import org.nuxeo.java.client.api.objects.Operation;
-import org.nuxeo.java.client.api.objects.blob.Blob;
-import org.nuxeo.java.client.api.objects.upload.BatchFile;
-import org.nuxeo.java.client.api.objects.upload.BatchUpload;
-import org.nuxeo.java.client.internals.spi.NuxeoClientException;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
 import org.nuxeo.runtime.test.runner.Jetty;

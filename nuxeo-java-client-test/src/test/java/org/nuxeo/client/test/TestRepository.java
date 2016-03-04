@@ -16,7 +16,7 @@
  * Contributors:
  *         Vladimir Pasquier <vpasquier@nuxeo.com>
  */
-package org.nuxeo.java.client;
+package org.nuxeo.client.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,20 +30,20 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nuxeo.client.api.objects.RecordSet;
+import org.nuxeo.client.api.objects.Document;
+import org.nuxeo.client.api.objects.Documents;
+import org.nuxeo.client.api.objects.acl.ACP;
+import org.nuxeo.client.api.objects.audit.Audit;
+import org.nuxeo.client.api.objects.blob.Blob;
+import org.nuxeo.client.internals.spi.NuxeoClientException;
+import org.nuxeo.client.test.marshallers.DocumentMarshaller;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.ecm.platform.audit.AuditFeature;
 import org.nuxeo.ecm.restapi.test.RestServerFeature;
 import org.nuxeo.ecm.restapi.test.RestServerInit;
-import org.nuxeo.java.client.api.objects.Document;
-import org.nuxeo.java.client.api.objects.Documents;
-import org.nuxeo.java.client.api.objects.RecordSet;
-import org.nuxeo.java.client.api.objects.acl.ACP;
-import org.nuxeo.java.client.api.objects.audit.Audit;
-import org.nuxeo.java.client.api.objects.blob.Blob;
-import org.nuxeo.java.client.internals.spi.NuxeoClientException;
-import org.nuxeo.java.client.marshallers.DocumentMarshaller;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
