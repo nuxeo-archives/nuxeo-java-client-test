@@ -118,6 +118,12 @@ public class TestOperation extends TestBase {
         Blobs resultBlobs = nuxeoClient.automation().input(FOLDER_2_FILE).execute("Document.GetBlobs");
         assertNotNull(resultBlobs);
         assertEquals(3, resultBlobs.size());
+
+        // it can work with no blob attached to the document
+        nuxeoClient.automation().input(FOLDER_2_FILE).param("xpath", "files:files").execute("Blob.RemoveFromDocument");
+        resultBlobs = nuxeoClient.automation().input(FOLDER_2_FILE).param("xpath", "files:files").execute(
+                "Document.GetBlobsByProperty");
+        assertEquals(0, resultBlobs.getBlobs().get(0).getLength());
     }
 
     @Test
