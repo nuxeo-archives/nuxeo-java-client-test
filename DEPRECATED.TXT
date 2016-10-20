@@ -1,0 +1,1 @@
+Archived: code moved to 'nuxeo' repository under the 'nuxeo-distribution/nuxeo-distribution-java-client-tests' folder
